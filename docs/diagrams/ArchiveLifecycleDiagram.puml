@@ -1,25 +1,28 @@
 @startuml
 !include style.puml
-!pragma layout smetana
 
-title Student archive lifecycle
+title Archive and restore workflow
 
-state Active
-state Archived
+start
+:Display an active result view;
+:Run **archive INDEX**;
+:Create an archived copy of the selected student\nwhile preserving every other field;
+:Replace and save the student;
+:Student disappears from active results;
+:Run **list archived**;
+:Display archived students;
 
-[*] --> Active
-Active --> Archived : archive INDEX\ncopy all fields; archived = true
-Archived --> Active : unarchive INDEX\ncopy all fields; archived = false
-Active --> [*] : delete INDEX\npermanent
-Archived --> [*] : delete INDEX\npermanent
+if (Choose an action for an archived student) then ([unarchive])
+    :Run **unarchive INDEX**;
+    :Create an active copy while preserving\nevery other field;
+    :Replace and save the student;
+    :Run **list**;
+    :Display the restored student\nin active results;
+else ([delete])
+    :Run **delete INDEX**;
+    :Permanently remove and save the student;
+endif
 
-note right of Active
-  Included in list, find, and filter.
-end note
-
-note right of Archived
-  Shown by list archived.
-  All record fields remain stored.
-end note
+stop
 
 @enduml
