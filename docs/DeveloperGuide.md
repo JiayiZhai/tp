@@ -218,10 +218,11 @@ archived copy, and leaves its saved-list position unchanged. `unarchive INDEX` p
 the archived view. `delete INDEX` continues to remove the displayed record permanently from either scope. Wrong-view
 checks run before index checks so a command that violates both rules reports a deterministic error.
 
-The activity diagram below summarizes the successful archive, restore, and permanent-delete workflows. Validation
-failures are omitted because they do not change any student record.
+The sequence diagram below shows how `archive 1` is parsed and executed. It gives lower-level detail within the Logic
+component while treating Model as a black box. `unarchive INDEX` follows the same interaction with the inverse archive
+state and requires the archived result view.
 
-![Archive and restore activity diagram](images/ArchiveLifecycleDiagram.png)
+<img src="images/ArchiveSequenceDiagram.png" width="800" />
 
 ### Lesson scheduling
 
